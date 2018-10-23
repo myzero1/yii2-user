@@ -46,12 +46,12 @@ class UserController extends Controller
     public function actionLogin()
     {
         // var_dump(Yii::$app->getSecurity()->generatePasswordHash('123456'));exit;
-        if (!Yii::$app->user->isGuest) {
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $model = new \myzero1\user\models\LoginForm();
+        if ($model->load(\Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
             $model->password = '';
