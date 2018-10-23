@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $bundle = \myzero1\adminlteiframe\assets\php\components\MainAsset::register(Yii::$app->view);
 $bundle->css[] = 'css/login.css'; // dynamic file added
 $bundle->js[] = 'js/login.js'; // dynamic file added
+$bundle->js[] = 'js/jquery.ez-bg-resize.js';
 
 $js = <<<JS
     if(window.top!=window.self){
@@ -81,6 +82,15 @@ $js = <<<JS
     }
 JS;
 
+$js2 = <<<JS
+    $("body").ezBgResize({
+    img : "$bundle->baseUrl/img/login-bg3.jpg",
+    opacity : .75,
+    center : true
+    });
+JS;
+
 $this->registerJs($js, \yii\web\View::POS_HEAD);
+$this->registerJs($js2);
 
 ?>
