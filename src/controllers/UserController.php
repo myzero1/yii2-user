@@ -39,21 +39,39 @@ class UserController extends Controller
     }
 
     /**
-     * Renders the index view for the module
+     * Login action.
+     *
      * @return string
      */
     public function actionLogin()
     {
-        return $this->render('cache');
+        // var_dump(Yii::$app->getSecurity()->generatePasswordHash('123456'));exit;
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        } else {
+            $model->password = '';
+
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
-     * Renders the index view for the module
+     * Logout action.
+     *
      * @return string
      */
     public function actionLogout()
     {
-        return $this->render('error');
+        Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 
 }
